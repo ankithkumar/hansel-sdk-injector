@@ -1,0 +1,26 @@
+{
+    "name": "Px sdk injector",
+    "description": "Inject sdk in any website",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": ["storage", "activeTab", "scripting"],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "/images/16_icon.png",
+        "32": "/images/32_icon.png",
+        "48": "/images/48_icon.png",
+        "128": "/images/128_icon.png"
+      }
+    },
+    "icons": {
+      "16": "/images/16_icon.png",
+      "32": "/images/32_icon.png",
+      "48": "/images/48_icon.png",
+      "128": "/images/128_icon.png"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'",
+      "sandbox": "sandbox allow-scripts; script-src 'self' 'https://*/*'; object-src 'self'"
+    }
+  }
