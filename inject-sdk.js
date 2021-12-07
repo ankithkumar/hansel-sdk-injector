@@ -1,12 +1,12 @@
 chrome.storage.sync.get(['appId', 'appKey'], sdk => {
-    function loadJs(url = 'https://hertz.hansel.io:5050/web_sdk/hansel.min.js') {
+    function loadJs(url = 'https://cdn-sdk.hansel.io/web/8.4.0/hansel.min.js') {
         let script = document.createElement("script");
         script.src = url;
         document.body.appendChild(script);
         return script;
     }
 
-    function loadCss(url = 'https://hertz.hansel.io:5050/web_sdk/hansel.min.css') {
+    function loadCss(url = 'https://cdn-sdk.hansel.io/web/8.4.0/hansel.min.css') {
         let link = document.createElement("link");
         link.rel = "stylesheet",
         link.type = "text/css",
@@ -15,17 +15,20 @@ chrome.storage.sync.get(['appId', 'appKey'], sdk => {
         document.body.appendChild(link);
     }
 
-    loadCss();
-    let scr = loadJs();
-    let scriptSrc = `
-        Hansel.initialize(
-            ${sdk.appId},
-            ${sdk.appKey}
-        );
-    `;
-    scr.addEventListener('load', () => {
+    function init() {
+        let scriptSrc = `
+            Hansel.clearHanselData();
+            Hansel.internal().enableDebugLogs();
+            Hansel.initialize(
+                '${sdk.appId}',
+                '${sdk.appKey}'
+            );
+        `;
         let script = document.createElement("script");
         script.innerHTML = scriptSrc;
         document.body.appendChild(script);
-    });
+    }
+    loadCss();
+    let scr = loadJs();
+    scr.addEventListener('load', init);
 });
