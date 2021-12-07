@@ -25,13 +25,13 @@ submitBtn.addEventListener("click", async () => {
         appKey: appKey.value
     };
     chrome.storage.sync.set(map, () => {
-        injectCode(chrome.runtime.getURL('https://hertz.hansel.io:5050/web_sdk/hansel.min.js'));
-        // injectCode(chrome.runtime.getURL('/inject-sdk.js'));
+        injectCode(chrome.runtime.getURL('/inject-sdk.js'));
     });
 });
 
 function injectCode(src) {
     const script = document.createElement('script');
+    script.setAttribute('id', 'test_injector');
     script.src = src;
     script.onload = function() {
         console.log("inline script injected");
