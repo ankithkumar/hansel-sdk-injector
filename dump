@@ -1,14 +1,10 @@
-
-    "content_scripts": [
-      {
-        "matches": ["https://*/*"],
-        "run_at": "document_end",
-        "js": ["content-script.js"]
-      }
-    ],
-    "web_accessible_resources": [
-      {
-        "resources": [ "inject-sdk.js" ],
-        "matches": [ "https://*/*" ]
-      }
-    ],
+"web_accessible_resources": [{
+  "resources": [
+    "*.js"
+  ],
+  "matches": ["<all_urls>"]
+}],
+"content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'",
+  "sandbox": "sandbox allow-scripts; script-src 'self' 'https://*.hansel.io/*'; object-src 'self'"
+}

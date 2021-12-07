@@ -18,6 +18,8 @@ chrome.storage.sync.get(['appId', 'appKey'], sdk => {
 
 // When the button is clicked, inject setPageBackgroundColor into current page
 submitBtn.addEventListener("click", async () => {
+    const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+    console.log('tab is ', tab);
     let appId = document.querySelector('#appId');
     let appKey = document.querySelector('#appKey');
     map = {
@@ -25,16 +27,14 @@ submitBtn.addEventListener("click", async () => {
         appKey: appKey.value
     };
     chrome.storage.sync.set(map, () => {
-        injectCode(chrome.runtime.getURL('/inject-sdk.js'));
+        chrome.scripting.executeScript({
+            files: ['injector.js'],
+            target: {
+                tabId: tab.id,
+                allFrames: true
+            },
+        }, () => {
+            console.log('successfull execution of chrome script');
+        })
     });
 });
-
-function injectCode(src) {
-    const script = document.createElement('script');
-    script.setAttribute('id', 'test_injector');
-    script.src = src;
-    script.onload = function() {
-        console.log("inline script injected");
-    };
-    document.body.appendChild(script);
-}
