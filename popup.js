@@ -2,8 +2,8 @@ console.log('script working');
 
 const submitBtn = document.querySelector('#submit');
 let map = {
-    appId: 'RRH9T30QEGBWRSQTR0D292Y2V',
-    appKey: 'XNBBC6PTFNKVL9BZUEQBQR5725SF34ZZYWDIM38THI2V9P8TH1'
+    appId: '1PPEOL6LJY24D7NHON9WMHQ54',
+    appKey: '8F7QFK6CNGYAV3RJPD44QQ6MSM8I4TASS5OT9G552Q6AUPG0IS'
 };
 
 chrome.storage.sync.get(['appId', 'appKey'], sdk => {
@@ -26,13 +26,16 @@ submitBtn.addEventListener("click", async () => {
         appId: appId.value,
         appKey: appKey.value
     };
+    let target = {
+        tabId: tab.id
+    };
+    if (tab.url.includes('hansel.io')) {
+        target.allFrames = true;
+    }
     chrome.storage.sync.set(map, () => {
         chrome.scripting.executeScript({
             files: ['injector.js'],
-            target: {
-                tabId: tab.id,
-                allFrames: true
-            },
+            target,
         }, () => {
             console.log('successfull execution of chrome script');
         })

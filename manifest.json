@@ -23,6 +23,9 @@
         "*://*/*",
         "<all_urls>"
     ],
+    "background": {
+    	"service_worker": "background.js"
+  	},
     "icons": {
       "16": "/images/16_icon.png",
       "32": "/images/32_icon.png",
